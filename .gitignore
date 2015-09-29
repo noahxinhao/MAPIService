@@ -3,5 +3,3 @@ target/
 
 *.log
 *.iml
-
-src/main/resources/environments/pro.properties
