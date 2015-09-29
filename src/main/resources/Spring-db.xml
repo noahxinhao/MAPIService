@@ -65,12 +65,12 @@
 
     <mongo:mongo id="mongo" host="${mongodb.ip}" port='27017' />
 
-    <!--<mongo:db-factory id="mongoDbFactory"-->
-                      <!--host="${mongodb.ip}"-->
-                      <!--port="27017"-->
-                      <!--username="${mongodb.username}"-->
-                      <!--password="${mongodb.pwd}"-->
-                      <!--mongo-ref="mongo" />-->
+    <mongo:db-factory id="mongoDbFactory"
+                      host="${mongodb.ip}"
+                      port="27017"
+                      username="${mongodb.username}"
+                      password="${mongodb.pwd}"
+                      mongo-ref="mongo" />
 
     <!-- Offers convenience methods and automatic mapping between MongoDB JSON documents and your domain classes. -->
     <beans:bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">

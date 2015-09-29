@@ -24,14 +24,13 @@ public class GlobalConfiguration {
     public static Integer SOCKET_PORT = 9098;
 
     static {
-        startAPNService();
+
         try {
             loadGlobalConfigProperties();
         } catch (IOException e) {
             LOGGER.info("#读取配置文件错误");
             System.exit(1);
         }
-
         InetAddress addr = null;
         try {
             addr = InetAddress.getLocalHost();
@@ -40,12 +39,14 @@ public class GlobalConfiguration {
             e.printStackTrace();
         }
         LOCAL_IP = addr.getHostAddress().toString();//获得本机IP
+
+        startAPNService();
     }
 
     //初始化APN推送服务
     public static void startAPNService() {
         apnsService = APNS.newService()
-                .withCert("/Users/noahli/workspace/NotificationServices/src/main/resources/证书.p12", "itlxh784533")
+                .withCert(GlobalConfiguration.GLOBAL_CONFIG.getProperty("p12.path")+"ADelivery.p12", "itlxh784533")
                 .withSandboxDestination()
                 .build();
     }
