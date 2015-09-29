@@ -9,8 +9,6 @@ import com.noah.mapi.model.SocketRegisterUser;
 public interface OnlineUserStorage {
     boolean isAlive();
 
-    SocketRegisterUser addSocketRegisterUser();
-
     void removeSocketRegisterUser(String uid);
 
     SocketRegisterUser saveOrUpdateSocketRegisterUser(SocketRegisterUser socketRegisterUser);

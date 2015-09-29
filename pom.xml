@@ -103,7 +103,6 @@
             <version>1.0.0.Beta6</version>
         </dependency>
 
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -150,6 +149,18 @@
             <build>
                 <filters>
                     <filter>src/main/resources/environments/develop.properties</filter>
+                </filters>
+            </build>
+        </profile>
+
+        <profile>
+            <id>pro</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <filters>
+                    <filter>src/main/resources/environments/pro.properties</filter>
                 </filters>
             </build>
         </profile>

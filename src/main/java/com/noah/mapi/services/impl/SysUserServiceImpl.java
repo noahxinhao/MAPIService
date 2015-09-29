@@ -5,6 +5,7 @@ import com.noah.mapi.exception.ServiceError;
 import com.noah.mapi.exception.ServiceException;
 import com.noah.mapi.model.SysUser;
 import com.noah.mapi.services.SysUserService;
+import com.noah.mapi.util.GlobTools;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +49,8 @@ public class SysUserServiceImpl implements SysUserService {
         if (null != checkUserEmail) {
             throw new ServiceException(ServiceError.SYS_USER_ADD_EMAIL_IS_EXIT);
         }
+
+        sysUser.setPassword(GlobTools.MD5(sysUser.getPassword(), sysUser.getAccount()));
 
         SysUser user = sysUserDaoImpl.addUser(sysUser);
 

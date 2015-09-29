@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration("classpath:/Spring-hibernate.xml")
+@ContextConfiguration("classpath:/Spring-db.xml")
 public class SysUserCtrlTest {
 
     @Resource

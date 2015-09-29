@@ -10,7 +10,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:/Spring-mvc.xml,classpath:Spring-hibernate.xml</param-value>
+        <param-value>classpath:/Spring-mvc.xml,classpath:Spring-db.xml</param-value>
     </context-param>
 
     <listener>

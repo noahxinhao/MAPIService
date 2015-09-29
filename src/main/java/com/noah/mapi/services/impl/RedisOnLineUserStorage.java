@@ -1,5 +1,6 @@
 package com.noah.mapi.services.impl;
 
+import com.noah.mapi.config.GlobalConfiguration;
 import com.noah.mapi.model.SocketRegisterUser;
 import com.noah.mapi.services.OnlineUserStorage;
 import redis.clients.jedis.Jedis;
@@ -43,7 +44,14 @@ public class RedisOnLineUserStorage implements OnlineUserStorage {
             config.setMinIdle(10);
             config.setMaxWaitMillis(1000 * 100);
             config.setTestOnBorrow(true);
-            pool = new JedisPool(config, "127.0.0.1", 6379);
+
+            pool = new JedisPool(config,
+                    GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.ip"),
+                    Integer.valueOf(GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.port")),
+                    Integer.valueOf(GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.timeout")),
+                    GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.password")
+            );
+
             return new RedisOnLineUserStorage(pool);
         } catch (Exception e) {
             //处理redis启动失败事件，发送提醒邮件
@@ -70,12 +78,6 @@ public class RedisOnLineUserStorage implements OnlineUserStorage {
             return false;
         }
         return true;
-    }
-
-    //业务逻辑方法
-    @Override
-    public SocketRegisterUser addSocketRegisterUser() {
-        return null;
     }
 
     @Override
