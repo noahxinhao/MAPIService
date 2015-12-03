@@ -38,15 +38,16 @@ public class GlobalConfiguration {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+
         LOCAL_IP = addr.getHostAddress().toString();//获得本机IP
 
-        startAPNService();
+        //startAPNService();
     }
 
     //初始化APN推送服务
     public static void startAPNService() {
         apnsService = APNS.newService()
-                .withCert(GlobalConfiguration.GLOBAL_CONFIG.getProperty("p12.path")+"ADelivery.p12", "itlxh784533")
+                .withCert(GlobalConfiguration.GLOBAL_CONFIG.getProperty("p12.path") + "ADelivery.p12", "itlxh784533")
                 .withSandboxDestination()
                 .build();
     }

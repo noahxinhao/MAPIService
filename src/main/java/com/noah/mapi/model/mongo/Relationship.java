@@ -16,7 +16,7 @@ public class Relationship {
     private String id;
     private Date createDate;
     private String userId;
-    private List<Friends> friends;
+    private List<Friend> friends;
 
     public String getId() {
         return id;
@@ -42,11 +42,11 @@ public class Relationship {
         this.userId = userId;
     }
 
-    public List<Friends> getFriends() {
+    public List<Friend> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<Friends> friends) {
+    public void setFriends(List<Friend> friends) {
         this.friends = friends;
     }
 }

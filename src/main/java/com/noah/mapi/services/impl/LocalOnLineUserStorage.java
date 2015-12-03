@@ -5,8 +5,7 @@ import com.noah.mapi.services.OnlineUserStorage;
 import com.noah.mapi.services.OnlineUserStorageService;
 import com.noah.mapi.util.LRULinkedHashMap;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -53,5 +52,17 @@ public class LocalOnLineUserStorage implements OnlineUserStorage {
             return socketRegisterUser;
         }
         return null;
+    }
+
+    @Override
+    public List<SocketRegisterUser> getAllSocketRegisterUser() {
+        List<SocketRegisterUser> socketRegisterUserList = new ArrayList<>();
+        for(Map.Entry<Object,Object> it: map.entrySet()){
+           SocketRegisterUser socketRegisterUser = new SocketRegisterUser();
+            socketRegisterUser.setUserId(it.getKey().toString());
+            socketRegisterUser.setSessionId(it.getValue().toString());
+            socketRegisterUserList.add(socketRegisterUser);
+        }
+        return socketRegisterUserList;
     }
 }

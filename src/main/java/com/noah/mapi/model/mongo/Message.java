@@ -4,6 +4,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -16,8 +17,8 @@ public class Message {
     private Date createDate = new Date();
     private String fromUserId;
     private String toUserId;
-    private String detail;
-    private TYPE type = TYPE.系统消息;
+    private Map detail;
+    private TYPE type = null;
 
     public STATUS getStatus() {
         return status;
@@ -27,7 +28,7 @@ public class Message {
         this.status = status;
     }
 
-    private STATUS status = STATUS.已发送;
+    private STATUS status = null;
 
     public String getId() {
         return id;
@@ -61,11 +62,11 @@ public class Message {
         this.toUserId = toUserId;
     }
 
-    public String getDetail() {
+    public Map getDetail() {
         return detail;
     }
 
-    public void setDetail(String detail) {
+    public void setDetail(Map detail) {
         this.detail = detail;
     }
 

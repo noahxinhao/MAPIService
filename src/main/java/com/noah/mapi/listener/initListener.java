@@ -13,12 +13,14 @@ import javax.servlet.ServletContextListener;
  */
 public class initListener implements ServletContextListener {
     private static final Logger LOG = Logger.getLogger(initListener.class);
+
 //    @Autowired
 //    SocketIOListenerService socketIOListenerService;
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         try {
+//            GlobalConfiguration.init();
         } catch (Exception e) {
             System.exit(1);
         }

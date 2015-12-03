@@ -3,6 +3,8 @@ package com.noah.mapi.services;
 
 import com.noah.mapi.model.SocketRegisterUser;
 
+import java.util.List;
+
 /**
  * Created by noahli on 15/9/22.
  */
@@ -15,4 +17,5 @@ public interface OnlineUserStorage {
 
     SocketRegisterUser getSocketRegisterUserByUserId(String userId);
 
+    List<SocketRegisterUser> getAllSocketRegisterUser();
 }

@@ -4,6 +4,8 @@ import com.noah.mapi.dao.RelationshipDao;
 import com.noah.mapi.model.mongo.Relationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,12 @@ public class RelationshipDaoImpl implements RelationshipDao {
 
     @Override
     public Relationship updateRelationship(Relationship relationship) {
+        Query query = new Query(Criteria.where("_id").is(relationship.getId()));
+        return null;
+    }
+
+    @Override
+    public Relationship getRelationShip(String userId) {
         return null;
     }
 

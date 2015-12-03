@@ -38,7 +38,8 @@ public class SocketIOListenerService {
         LOG.info("#启动IP:" + GlobalConfiguration.LOCAL_IP);
         LOG.info("#启动端口:" + GlobalConfiguration.SOCKET_PORT);
         server = new SocketIOServer(config);
-        LOG.info("===========SOCKET服务完成==========");
+
+//        LOG.info("===========SOCKET服务完成==========");
 
         server.addConnectListener(new ConnectListener() {
             @Override
@@ -62,7 +63,7 @@ public class SocketIOListenerService {
                 List<Message> messageList = messageDaoImpl.getMessageBy(socketRegister.getUserId());
                 if (null != messageList) {
                     for (Message message : messageList) {
-                        postMessage(client, EventEnum.EVENT.sendMessage.name(), message);
+                        postMessage(socketRegister.getUserId(), EventEnum.EVENT.sendMessage.name(), message);
                         message.setStatus(Message.STATUS.已发送);
                         messageDaoImpl.updateMessage(message);
                     }
@@ -76,10 +77,10 @@ public class SocketIOListenerService {
             public void onData(SocketIOClient socketIOClient, Message message, AckRequest ackRequest) throws Exception {
                 OnlineUserStorage onlineUserStorage = OnlineUserStorageService.getStorage();
                 SocketRegisterUser socketRegisterUser = onlineUserStorage.getSocketRegisterUserByUserId(message.getToUserId());
+                message.setType(Message.TYPE.聊天消息);
                 if (null != socketRegisterUser) {
-                    SocketIOClient client = server.getClient(UUID.fromString(socketRegisterUser.getSessionId()));
-                    if (null != client) {
-                        postMessage(client, EventEnum.EVENT.sendMessage.name(), message);
+                    if (null != server.getClient(UUID.fromString(socketRegisterUser.getSessionId()))) {
+                        postMessage(socketRegisterUser.getSessionId(), EventEnum.EVENT.sendMessage.name(), message);
                         message.setStatus(Message.STATUS.已发送);
                     } else {
                         //将节点删除
@@ -90,7 +91,6 @@ public class SocketIOListenerService {
                 } else {
                     message.setStatus(Message.STATUS.未发送);
                 }
-                message.setType(Message.TYPE.聊天消息);
                 //将消息保存
                 messageDaoImpl.addMessage(message);
             }
@@ -107,7 +107,10 @@ public class SocketIOListenerService {
         server.start();
     }
 
-    public void postMessage(SocketIOClient client, String event, Message message) {
-        client.sendEvent(event, message);
+    public void postMessage(String userId, String event, Message message) {
+        SocketIOClient client = server.getClient(UUID.fromString(userId));
+        if (null != client) {
+            client.sendEvent(event, message);
+        }
     }
 }

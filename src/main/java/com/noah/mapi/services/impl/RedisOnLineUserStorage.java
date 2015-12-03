@@ -3,9 +3,12 @@ package com.noah.mapi.services.impl;
 import com.noah.mapi.config.GlobalConfiguration;
 import com.noah.mapi.model.SocketRegisterUser;
 import com.noah.mapi.services.OnlineUserStorage;
+import org.apache.commons.lang.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.util.List;
 
 /**
  * Created by noahli on 15/9/22.
@@ -45,12 +48,21 @@ public class RedisOnLineUserStorage implements OnlineUserStorage {
             config.setMaxWaitMillis(1000 * 100);
             config.setTestOnBorrow(true);
 
-            pool = new JedisPool(config,
-                    GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.ip"),
-                    Integer.valueOf(GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.port")),
-                    Integer.valueOf(GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.timeout")),
-                    GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.password")
-            );
+            if (StringUtils.isBlank(GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.password"))) {
+                pool = new JedisPool(config,
+                        GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.ip"),
+                        Integer.valueOf(GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.port")),
+                        Integer.valueOf(GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.timeout"))
+                );
+            } else {
+                pool = new JedisPool(config,
+                        GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.ip"),
+                        Integer.valueOf(GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.port")),
+                        Integer.valueOf(GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.timeout")),
+                        GlobalConfiguration.GLOBAL_CONFIG.getProperty("redis.password")
+                );
+            }
+
 
             return new RedisOnLineUserStorage(pool);
         } catch (Exception e) {
@@ -61,7 +73,7 @@ public class RedisOnLineUserStorage implements OnlineUserStorage {
     }
 
     public static synchronized RedisOnLineUserStorage getRedisOnLineUserStorage() {
-        if (redisOnLineUserStorage == null) {
+        if (redisOnLineUserStorage == null || !redisOnLineUserStorage.isAlive()) {
             redisOnLineUserStorage = createRedisOnLineUserStorage();
         }
         return redisOnLineUserStorage;
@@ -107,6 +119,11 @@ public class RedisOnLineUserStorage implements OnlineUserStorage {
             socketRegisterUser.setSessionId(sessionId);
             return socketRegisterUser;
         }
+        return null;
+    }
+
+    @Override
+    public List<SocketRegisterUser> getAllSocketRegisterUser() {
         return null;
     }
 }

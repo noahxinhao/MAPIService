@@ -17,6 +17,7 @@ public class EventEnum {
     public enum EVENT {
         sendMessage,
         socketRegister,
-        messageRecived
+        messageRecived,
+        friendApply
     }
 }

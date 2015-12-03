@@ -8,7 +8,7 @@ import javax.persistence.Id;
  * Created by noahli on 15/9/20.
  */
 @Document
-public class Friends {
+public class Friend {
     @Id
     private String id;
     private String name;

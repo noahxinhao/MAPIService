@@ -13,5 +13,7 @@ public interface RelationshipDao {
 
     Relationship updateRelationship(Relationship relationship);
 
+    Relationship getRelationShip(String userId);
+
     List<Relationship> getAllRelationship(String userId);
 }
