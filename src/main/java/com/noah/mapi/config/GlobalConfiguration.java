@@ -39,7 +39,8 @@ public class GlobalConfiguration {
             e.printStackTrace();
         }
 
-        LOCAL_IP = addr.getHostAddress().toString();//获得本机IP
+//        LOCAL_IP = addr.getHostAddress().toString();//获得本机IP
+        LOCAL_IP = "121.42.172.20";//获得本机IP
 
         //startAPNService();
     }
